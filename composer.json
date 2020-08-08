@@ -1,0 +1,24 @@
+{
+  "name": "jonbp/ignition",
+  "description": "The WordPress launch system",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jon Beaumont-Pike",
+      "email": "me@jonbp.co.uk",
+      "homepage": "https://jonbp.co.uk"
+    }
+  ],
+  "homepage": "https://github.com/jonbp/wp-cli-sync",
+  "minimum-stability": "dev",
+  "require": {
+    "vlucas/phpdotenv": "^3.0.0",
+    "symfony/yaml": "^5.2@dev"
+  },
+  "require-dev": {
+    "humbug/box": "^3.8"
+  },
+  "scripts": {
+    "compile": "vendor/bin/box compile"
+  }
+}

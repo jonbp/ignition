@@ -1,0 +1,4 @@
+{
+  "main": "bin/main",
+  "output": "./ignition.phar"
+}
