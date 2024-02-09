@@ -1,14 +1,13 @@
-<h1 align="center">
-  <a href="https://github.com/jonbp/ignition"><img alt="Ignition" src="https://jonbp.github.io/project-icons/ignition.svg" width="64" height="64"></a><br />Ignition
-</h1>
+# Ignition<a href="https://github.com/jonbp/ignition"><img alt="WP-CLI Sync" src="https://jonbp.github.io/project-icons/ignition.svg" width="40" height="40" align="right"></a>
 
-<p align="center">The WordPress Launch System</p>
-
-<p align="center">
-  <img src="https://jonbp.github.io/project-screenshots/ignition.png" />
-</p>
+[![GitHub Open Issues](https://img.shields.io/github/issues-raw/jonbp/ignition)](https://github.com/jonbp/ignition/issues)
+[![GitHub Open Pull Requests](https://img.shields.io/github/issues-pr-raw/jonbp/ignition)](https://github.com/jonbp/ignition/pulls)
 
 ## About
+
+The WordPress Launch System
+
+![Screenshot](https://jonbp.github.io/project-screenshots/ignition.png)
 
 Ignition harnesses the power of [WP-CLI](https://github.com/wp-cli/wp-cli) to quickly set up a WordPress site by using the command line. Using it drastically speeds up the creation of a new WordPress site.
 
