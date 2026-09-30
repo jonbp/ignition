@@ -9,7 +9,7 @@
 
 The WordPress Launch System
 
-![Screenshot](https://jonbp.github.io/project-screenshots/ignition.png)
+![Screenshot](https://jonbp.github.io/project-screenshots/ignition.gif)
 
 Ignition harnesses the power of [WP-CLI](https://github.com/wp-cli/wp-cli) to quickly set up a WordPress site by using the command line. Using it drastically speeds up the creation of a new WordPress site.
 
