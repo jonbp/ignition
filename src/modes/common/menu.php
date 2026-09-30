@@ -1,15 +1,14 @@
 <?php
 
 // Create Base Navigation
-ignition_command('wp menu create "Main Navigation"');
+$menuID = ignition_query('wp menu create '.ignition_arg('Main Navigation').' --porcelain', '{menu-id}');
 
-// Get Page IDs
-$pageIDs = shell_exec('wp post list --order="ASC" --orderby="date" --post_type=page --post_status=publish --posts_per_page=-1 --field=ID --format=ids');
-
-// Explode into Array
-$pageIDs = explode(' ', $pageIDs);
-
-// Loop through IDs and create menu items
-foreach($pageIDs as $pageid) {
-  ignition_command('wp menu item add-post main-navigation '.$pageid);
+// Add the pages created in basesetup.php, in order
+$menu_count = 0;
+if($menuID !== '') {
+  foreach($page_ids as $pageID) {
+    if(ignition_command('wp menu item add-post '.$menuID.' '.$pageID)) {
+      $menu_count++;
+    }
+  }
 }

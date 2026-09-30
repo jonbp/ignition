@@ -1,4 +1,6 @@
-# Ignition<a href="https://github.com/jonbp/ignition"><img alt="WP-CLI Sync" src="https://jonbp.github.io/project-icons/ignition.svg" width="40" height="40" align="right"></a>
+# Ignition
+
+<a href="https://github.com/jonbp/ignition"><img alt="WP-CLI Sync" src="https://jonbp.github.io/project-icons/ignition.svg" align="right" /></a>
 
 [![GitHub Open Issues](https://img.shields.io/github/issues-raw/jonbp/ignition)](https://github.com/jonbp/ignition/issues)
 [![GitHub Open Pull Requests](https://img.shields.io/github/issues-pr-raw/jonbp/ignition)](https://github.com/jonbp/ignition/pulls)
@@ -22,7 +24,9 @@ Ignition achieves this by doing the following:
 
 ## Requirements
 
+* PHP 8.2 or later
 * [WP-CLI](https://github.com/wp-cli/wp-cli) &mdash; As this project is uses WP-CLI heavily, the requirements for this plugin match that of WP-CLI
+* [Composer](https://getcomposer.org) &mdash; Bedrock mode only, for installing plugins
 
 ## Installation
 
@@ -34,6 +38,16 @@ Locate the ignition.phar file you just downloaded and run the following commands
 chmod +x ignition.phar
 sudo mv ignition.phar /usr/local/bin/ignition
 ```
+
+## Options
+
+```
+ignition [--dry-run]
+```
+
+* `--dry-run` &mdash; Lists the commands Ignition would run instead of running them
+* `-h`, `--help` &mdash; Shows the options
+* `-V`, `--version` &mdash; Shows the version
 
 ## Modes
 
@@ -55,11 +69,13 @@ Firstly, you’ll need to set up your [Bedrock](https://github.com/roots/bedrock
 composer create-project roots/bedrock project-name
 ```
 
-Once this is complete, open the folder and populate the fields inside of `.env`. When this is complete, you can then run `ignition`.
+Once this is complete, open the folder and populate the fields inside of `.env`. When this is complete, you can then run `ignition`. The site URL is taken from `WP_HOME`, and the database details from `DB_NAME`, `DB_USER`, `DB_PASSWORD` and `DB_HOST`.
+
+Plugins are added with `composer require`, from whichever WordPress plugin repository the project's `composer.json` uses: [WP Packages](https://wp-packages.org) (new Bedrock projects) or [WPackagist](https://wpackagist.org) (older ones).
 
 ## Config File
 
-You can also use a config file to define a base set of plugins or details. This config file comes in the form of a YAML file located at `~/.config/ignition/config.yml`.
+You can also use a config file to define a base set of plugins or details. This config file comes in the form of a YAML file located at `~/.config/ignition/config.yml` (or `$XDG_CONFIG_HOME/ignition/config.yml` if you've set `XDG_CONFIG_HOME`). Values from the config file are used instead of asking for them.
 
 Here’s an example of this file:
 
@@ -92,13 +108,24 @@ plugins:
   - autodescription
   - ga-google-analytics
   - wp-super-cache
+
+# Common Plugins (Asked about on each install, activated if chosen)
+common_plugins:
+
+  - woocommerce
+  - advanced-custom-fields
+  - wordpress-seo
 ```
+
+Plugins are listed by their slug, the last part of their WordPress.org URL (e.g. `wordpress-seo` for https://wordpress.org/plugins/wordpress-seo/). Ignition looks up each common plugin's name on WordPress.org to ask about it, e.g. "Install Yoast SEO?".
 
 ## Building
 
 The Ignition project uses [Box](https://github.com/humbug/box) for building as a PHAR file. To get started, run `composer install` in the project. Once that's finished, you can use `composer compile` to build the PHAR file.
 
-You can also add `debug: true` to the config file to see the commands that are run instead of executing them.
+Box is installed in its own `vendor-bin/box` folder by [composer-bin-plugin](https://github.com/bamarni/composer-bin-plugin), so its dependencies stay out of the PHAR. The version shown by `ignition --version` comes from the latest git tag.
+
+Adding `debug: true` to the config file does the same as `--dry-run`.
 
 ## Previous Projects
 

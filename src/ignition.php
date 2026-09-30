@@ -1,16 +1,25 @@
 <?php
 
+// Version, filled in from the git tag when the phar is built
+const IGNITION_VERSION = '@git_version@';
+
 // Functions
 include('inc/functions.php');
 
-// Welcome
-task_message('The WordPress Launch System', 'Ignition v1.0.0', 97);
+// Command Line Options
+include('inc/arguments.php');
 
 // Environment Load
 include('inc/environment.php');
 
 // Config File Load
 include('inc/config.php');
+
+// Welcome
+ignition_header($variables['ignition_mode']);
+
+// Pre-flight Checks
+include('inc/preflight.php');
 
 // User Inputs
 include('inc/inputs.php');

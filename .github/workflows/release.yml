@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    tags: ['*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # Built on the lowest supported PHP version
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --no-progress
+
+      - name: Build phar
+        run: composer compile
+
+      # The notes are the tag's section of CHANGELOG.md, e.g. '### 2.0.0: 30/09/2026'
+      - name: Read release notes
+        run: |
+          awk -v tag="$GITHUB_REF_NAME" '
+            /^### / { found = index($0, "### " tag ":") == 1; next }
+            found
+          ' CHANGELOG.md | sed -e '/./,$!d' > notes.md
+          if [ ! -s notes.md ]; then
+            echo "::error::No CHANGELOG.md entry for $GITHUB_REF_NAME"
+            exit 1
+          fi
+
+      - name: Publish release
+        run: gh release create "$GITHUB_REF_NAME" ignition.phar --title "$GITHUB_REF_NAME" --notes-file notes.md
+        env:
+          GH_TOKEN: ${{ github.token }}

@@ -1,4 +1,5 @@
 {
   "main": "bin/main",
-  "output": "./ignition.phar"
+  "output": "./ignition.phar",
+  "git-version": "git_version"
 }

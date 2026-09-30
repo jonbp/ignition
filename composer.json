@@ -9,14 +9,28 @@
       "homepage": "https://jonbp.co.uk"
     }
   ],
-  "homepage": "https://github.com/jonbp/wp-cli-sync",
-  "minimum-stability": "dev",
+  "homepage": "https://github.com/jonbp/ignition",
   "require": {
-    "vlucas/phpdotenv": "^3.0.0",
-    "symfony/yaml": "^5.2@dev"
+    "php": ">=8.2",
+    "vlucas/phpdotenv": "^5.6",
+    "symfony/yaml": "^7.0 || ^8.0"
   },
   "require-dev": {
-    "humbug/box": "^3.8"
+    "bamarni/composer-bin-plugin": "^1.8"
+  },
+  "config": {
+    "allow-plugins": {
+      "bamarni/composer-bin-plugin": true
+    },
+    "platform": {
+      "php": "8.2.0"
+    }
+  },
+  "extra": {
+    "bamarni-bin": {
+      "bin-links": true,
+      "forward-command": true
+    }
   },
   "scripts": {
     "compile": "vendor/bin/box compile"

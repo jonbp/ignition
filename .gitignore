@@ -1,3 +1,5 @@
 /vendor
 composer.lock
 *.phar
+/vendor-bin/**/vendor
+/vendor-bin/**/composer.lock

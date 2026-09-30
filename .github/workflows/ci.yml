@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  build:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.2', '8.3', '8.4', '8.5']
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Box reads the version from the latest tag
+          fetch-depth: 0
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --no-progress
+
+      - name: Lint
+        run: |
+          php -l bin/main
+          find src -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Build phar
+        run: composer compile
+
+      - name: Smoke test
+        run: |
+          php ignition.phar --version
+          mkdir -p "$RUNNER_TEMP/site" "$RUNNER_TEMP/home"
+          cd "$RUNNER_TEMP/site"
+          printf '%s\n' db dbuser dbpass admin admin@example.test Jo Bloggs https://example.test 'Example Site' '' 'About, Contact' y n n n y \
+            | HOME="$RUNNER_TEMP/home" php "$GITHUB_WORKSPACE/ignition.phar" --dry-run | tee output.txt
+          grep -q 'Dry run complete' output.txt
